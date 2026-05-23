@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class TaskService {
 
-  private baseUrl = 'http://localhost:5000/api/tasks';
+  private baseUrl = 'https://taskmanagement-backend-xjzw.onrender.com/tasks';
 
   constructor(private http: HttpClient) {}
 

@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 })
 export class UserTaskService {
 
-  private baseUrl = 'http://localhost:5000/api/users';
+  private baseUrl = 'https://taskmanagement-backend-xjzw.onrender.com/users';
 
   constructor(private http: HttpClient) {}
 

@@ -7,8 +7,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthService {
-  private baseUrl = 'http://localhost:5000/api/auth';
- 
+  // private baseUrl = 'http://localhost:5000/api/auth';
+ private baseUrl = 'https://taskmanagement-backend-xjzw.onrender.com/auth';
   constructor(private http: HttpClient, private router: Router ) {}
 
   //Signup api
