@@ -1,0 +1,66 @@
+<div class="signup-container">
+  <div class="signup-card">
+    <h2>Create Account</h2>
+    <p class="subtitle">Please enter your details to sign up</p>
+
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+
+      <!-- NAME -->
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input 
+          type="text"
+          id="name"
+          formControlName="name"
+          placeholder="Enter your name"
+          [class.invalid]="signupForm.get('name')?.invalid && signupForm.get('name')?.touched"
+        >
+
+        <div class="error-message" *ngIf="signupForm.get('name')?.invalid && signupForm.get('name')?.touched">
+          <span>Name is required</span>
+        </div>
+      </div>
+
+      <!-- EMAIL -->
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input 
+          type="email"
+          id="email"
+          formControlName="email"
+          placeholder="Enter your email"
+          [class.invalid]="signupForm.get('email')?.invalid && signupForm.get('email')?.touched"
+        >
+
+        <div class="error-message" *ngIf="signupForm.get('email')?.invalid && signupForm.get('email')?.touched">
+          <span *ngIf="signupForm.get('email')?.errors?.['required']">Email is required</span>
+          <span *ngIf="signupForm.get('email')?.errors?.['email']">Invalid email format</span>
+        </div>
+      </div>
+
+      <!-- PASSWORD -->
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input 
+          type="password"
+          id="password"
+          formControlName="password"
+          placeholder="Enter your password"
+          [class.invalid]="signupForm.get('password')?.invalid && signupForm.get('password')?.touched"
+        >
+
+        <div class="error-message" *ngIf="signupForm.get('password')?.invalid && signupForm.get('password')?.touched">
+          <span *ngIf="signupForm.get('password')?.errors?.['required']">Password is required</span>
+          <span *ngIf="signupForm.get('password')?.errors?.['minlength']">Minimum 6 characters required</span>
+        </div>
+      </div>
+
+      <!-- BUTTON -->
+      <button type="submit" [disabled]="isLoading" class="btn-primary">
+        <span *ngIf="!isLoading">Sign Up</span>
+        <div *ngIf="isLoading" class="spinner"></div>
+      </button >
+      <button class="btn-primary" routerLink="/login">Login</button>
+    </form>
+  </div>
+</div>
