@@ -160,7 +160,7 @@ handleTaskSubmit(taskData: any) {
           list.map(t => t._id === updated._id ? updated : t)
         );
 
-        this.toastService.success(res.message);
+      
       },
       error: () => this.toastService.error('Status update failed')
     });
