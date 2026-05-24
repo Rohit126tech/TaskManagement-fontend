@@ -64,9 +64,23 @@ export class LoginformComponent {
        
       },
       error: (err: any) => {
-        this.isLoading = false;
-        this.toastService.error(err.message || 'Login failed');
-      },
+  this.isLoading = false;
+
+  const msg = err?.error?.message;
+
+  switch (msg) {
+    case 'Invalid credentials':
+      this.toastService.error('Wrong email or password');
+      break;
+
+    case 'User not found':
+      this.toastService.error('Account does not exist');
+      break;
+
+    default:
+      this.toastService.error(msg || 'Login failed');
+  }
+}
     });
   }
 }
