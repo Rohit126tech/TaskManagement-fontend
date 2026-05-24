@@ -115,4 +115,3 @@ loadUserTasks(user: any) {
   }
 
 }
-

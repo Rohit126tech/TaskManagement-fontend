@@ -41,15 +41,8 @@ export const routes: Routes = [
           import('./features/home/taskview/taskview.component').then(
             (m) => m.TaskviewComponent,
           ),
-      },
-    {
-        path: 'adminpanel',
-
-        loadComponent: () =>
-          import('./features/home/admin-panel/admin-panel.component').then(
-            (m) => m.AdminPanelComponent,
-          ),
-      },]
+      }
+    ]
       
    },
 ];
