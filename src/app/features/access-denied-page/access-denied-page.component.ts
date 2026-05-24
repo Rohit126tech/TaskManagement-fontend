@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-access-denied-page',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './access-denied-page.component.html',
   styleUrl: './access-denied-page.component.css'
 })
