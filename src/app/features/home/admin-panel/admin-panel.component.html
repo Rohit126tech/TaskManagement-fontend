@@ -48,13 +48,7 @@
           <div class="user-avatar">
             {{ user.name.charAt(0) }}
           </div>
-          <button
-            (click)="deleteTask(user._id)"
-            title="Delete"
-            class="delete-btn"
-          >
-            🗑
-          </button>
+          
           <div class="user-info">
             <h3>{{ user.name }}</h3>
             <p>{{ user.email }}</p>
@@ -90,13 +84,7 @@
             {{ task.priority }}
           </span>
 
-          <button
-            (click)="deleteTask(task._id)"
-            title="Delete"
-            class="delete-btn"
-          >
-            🗑
-          </button>
+         
         </div>
 
         <h3 class="task-title">

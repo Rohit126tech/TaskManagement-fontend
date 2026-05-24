@@ -93,30 +93,6 @@ export class AdminPanelComponent {
   getStatusClass(status: TaskStatus): string {
     return `status-${status.toLowerCase().replace(' ', '-')}`;
   }
-deleteTask(id: string) {
 
-    if (!confirm('Delete this task?')) return;
 
-    this.taskService.deleteTask(id).subscribe({
-      next: (res) => {
-
-        this.tasks.update(list => list.filter(t => t._id !== id));
-
-        this.toastService.success(res.message);
-      },
-      error: () => this.toastService.error('Delete failed')
-    });
-  }
-
-  deleteUser(user: any) {
-    this.userTaskService.deleteUser(user._id).subscribe({
-      next: (res: any) => {
-        this.toastService.success(res.message);
-        this.users.update((list) => list.filter((u) => u._id !== user._id));
-      },
-      error: (err) => {
-        this.toastService.error(err.error.message);
-      },
-    });
-  }
 }
