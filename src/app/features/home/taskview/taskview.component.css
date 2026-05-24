@@ -1,3 +1,4 @@
+
 .dashboard-container {
   min-height: 100vh;
   background-color: var(--bg);
@@ -86,18 +87,47 @@
   border: 1px solid var(--border);
   background-color: var(--input-bg);
   color: var(--text);
-  border-radius: 8px;
+  border-radius: 10px;
   font-size: 0.95rem;
+  transition: 0.25s ease;
+}
+
+.search-box input:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12);
 }
 
 select {
-  padding: 10px 12px;
+  padding: 10px 40px 10px 14px;
   border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--input-bg);
-  font-size: 0.9rem;
+  border-radius: 10px;
+  background-color: var(--input-bg);
   color: var(--text);
+  font-size: 0.9rem;
+  font-weight: 500;
   cursor: pointer;
+  transition: 0.25s ease;
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, #94a3b8 50%),
+    linear-gradient(135deg, #94a3b8 50%, transparent 50%);
+  background-position:
+    calc(100% - 18px) calc(50% - 3px),
+    calc(100% - 12px) calc(50% - 3px);
+  background-size: 6px 6px;
+  background-repeat: no-repeat;
+}
+
+select:hover {
+  border-color: #94a3b8;
+}
+
+select:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12);
+  transform: translateY(-1px);
 }
 
 .btn-primary {
@@ -175,9 +205,20 @@ select {
   text-transform: uppercase;
 }
 
-.priority-high { background: #fee2e2; color: #ef4444; }
-.priority-medium { background: #fef3c7; color: #d97706; }
-.priority-low { background: #f0fdf4; color: #22c55e; }
+.priority-high {
+  background: #fee2e2;
+  color: #ef4444;
+}
+
+.priority-medium {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.priority-low {
+  background: #f0fdf4;
+  color: #22c55e;
+}
 
 .task-actions {
   display: flex;
@@ -193,8 +234,13 @@ select {
   transition: color 0.2s;
 }
 
-.task-actions button:hover { color: #3b82f6; }
-.task-actions button.delete:hover { color: #ef4444; }
+.task-actions button:hover {
+  color: #3b82f6;
+}
+
+.task-actions button.delete:hover {
+  color: #ef4444;
+}
 
 .task-title {
   margin: 0 0 10px 0;
@@ -224,17 +270,31 @@ select {
 }
 
 .status-dropdown select {
-  padding: 6px 10px;
-  font-size: 0.8rem;
+  padding: 8px 34px 8px 12px;
+  font-size: 0.82rem;
   font-weight: 600;
-  border-radius: 6px;
+  border-radius: 999px;
+  min-width: 140px;
 }
 
-.status-todo { background: #f1f5f9; color: #475569; border-color: #e2e8f0; }
-.status-in-progress { background: #eff6ff; color: #3b82f6; border-color: #bfdbfe; }
-.status-completed { background: #f0fdf4; color: #22c55e; border-color: #bbf7d0; }
+.status-todo {
+  background: #f1f5f9;
+  color: #475569;
+  border-color: #e2e8f0;
+}
 
-/* Modal */
+.status-in-progress {
+  background: #eff6ff;
+  color: #3b82f6;
+  border-color: #bfdbfe;
+}
+
+.status-completed {
+  background: #f0fdf4;
+  color: #22c55e;
+  border-color: #bbf7d0;
+}
+
 .modal-backdrop {
   position: fixed;
   top: 0;
@@ -259,7 +319,6 @@ select {
   box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
 }
 
-/* Skeleton Loader */
 .skeleton-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -282,12 +341,20 @@ select {
   bottom: 0;
   left: 0;
   transform: translateX(-100%);
-  background-image: linear-gradient(90deg, rgba(255,255,255,0) 0, rgba(255,255,255,0.2) 20%, rgba(255,255,255,0.5) 60%, rgba(255,255,255,0));
+  background-image: linear-gradient(
+    90deg,
+    rgba(255,255,255,0) 0,
+    rgba(255,255,255,0.2) 20%,
+    rgba(255,255,255,0.5) 60%,
+    rgba(255,255,255,0)
+  );
   animation: shimmer 2s infinite;
 }
 
 @keyframes shimmer {
-  100% { transform: translateX(100%); }
+  100% {
+    transform: translateX(100%);
+  }
 }
 
 .empty-state {
@@ -299,21 +366,44 @@ select {
   color: #64748b;
 }
 
+.status-dropdown {
+  position: relative;
+}
+
+.status-dropdown::after {
+  content: "⌄";
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-52%);
+  font-size: 0.9rem;
+  pointer-events: none;
+  color: currentColor;
+  opacity: 0.8;
+}
+
+.status-dropdown select {
+  appearance: none;
+  padding-right: 34px;
+}
+
+
 @media (max-width: 768px) {
   .actions-bar {
     flex-direction: column;
     align-items: stretch;
   }
-  
+
   .search-filters {
     flex-direction: column;
   }
-  
+
   .header-content {
     padding: 0 10px;
   }
-  
+
   .user-welcome {
     display: none;
   }
 }
+
