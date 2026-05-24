@@ -1,4 +1,3 @@
-
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -6,34 +5,33 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth.service';
 import { ToastService } from '../../../core/services/toast.service';
 
-
 import { Task, TaskStatus } from '../../../core/models/taskmodel';
 import { UserTaskService } from '../../../core/services/usertask.service';
+import { TaskService } from '../../../core/services/task.service';
 
 @Component({
   selector: 'app-admin-panel',
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './admin-panel.component.html',
-  styleUrl: './admin-panel.component.css'
+  styleUrl: './admin-panel.component.css',
 })
 export class AdminPanelComponent {
-
   users = signal<any[]>([]);
   userTasks = signal<Task[]>([]);
-
+  tasks = signal<Task[]>([]);
   isLoading = signal(false);
-selectedUser: any = null;
+  selectedUser: any = null;
   isDarkMode = false;
 
   constructor(
     private userTaskService: UserTaskService,
     public authService: AuthService,
     private toastService: ToastService,
+    private taskService:TaskService
   ) {}
 
   ngOnInit() {
-
     this.loadUsers();
 
     this.isDarkMode =
@@ -41,77 +39,84 @@ selectedUser: any = null;
   }
 
   //loadusers
- loadUsers() {
+  loadUsers() {
+    this.isLoading.set(true);
 
-  this.isLoading.set(true);
+    this.userTaskService.getAllUsers().subscribe({
+      next: (res: any) => {
+        const onlyUsers = (res.data || []).filter(
+          (user: any) => user.role === 'user',
+        );
 
-  this.userTaskService.getAllUsers().subscribe({
+        this.users.set(onlyUsers);
 
-    next: (res: any) => {
+        this.isLoading.set(false);
+      },
 
-      const onlyUsers = (res.data || []).filter(
-        (user: any) => user.role === 'user'
-      );
+      error: () => {
+        this.toastService.error('Failed to load users');
 
-      this.users.set(onlyUsers);
-
-      this.isLoading.set(false);
-    },
-
-    error: () => {
-
-      this.toastService.error('Failed to load users');
-
-      this.isLoading.set(false);
-    }
-  });
-}
+        this.isLoading.set(false);
+      },
+    });
+  }
 
   // LOAD USER TASKS
- 
-loadUserTasks(user: any) {
 
-  this.selectedUser = user;
+  loadUserTasks(user: any) {
+    this.selectedUser = user;
 
-  this.userTaskService.getUserTasks(user._id).subscribe({
+    this.userTaskService.getUserTasks(user._id).subscribe({
+      next: (res) => {
+        this.userTasks.set(res.data || []);
 
-    next: (res) => {
+        this.toastService.success(`${user.name} tasks loaded`);
+      },
 
-      this.userTasks.set(res.data || []);
-
-      this.toastService.success(
-        `${user.name} tasks loaded`
-      );
-    },
-
-    error: () => {
-
-      this.toastService.error(
-        'Failed to load user tasks'
-      );
-    }
-  });
-}
-
-
-
- 
+      error: () => {
+        this.toastService.error('Failed to load user tasks');
+      },
+    });
+  }
 
   // THEME
   toggleTheme() {
-
     this.isDarkMode = !this.isDarkMode;
 
     document.documentElement.setAttribute(
       'data-theme',
-      this.isDarkMode ? 'dark' : 'light'
+      this.isDarkMode ? 'dark' : 'light',
     );
   }
 
   // STATUS CLASS
   getStatusClass(status: TaskStatus): string {
-
     return `status-${status.toLowerCase().replace(' ', '-')}`;
   }
+deleteTask(id: string) {
 
+    if (!confirm('Delete this task?')) return;
+
+    this.taskService.deleteTask(id).subscribe({
+      next: (res) => {
+
+        this.tasks.update(list => list.filter(t => t._id !== id));
+
+        this.toastService.success(res.message);
+      },
+      error: () => this.toastService.error('Delete failed')
+    });
+  }
+
+  deleteUser(user: any) {
+    this.userTaskService.deleteUser(user._id).subscribe({
+      next: (res: any) => {
+        this.toastService.success(res.message);
+        this.users.update((list) => list.filter((u) => u._id !== user._id));
+      },
+      error: (err) => {
+        this.toastService.error(err.error.message);
+      },
+    });
+  }
 }
