@@ -6,7 +6,7 @@ import { RouterLink } from '@angular/router';
    standalone: true,
   imports: [RouterLink],
   templateUrl: './access-denied-page.component.html',
-  styleUrl: './access-denied-page.component.css'
+   styleUrls: ['./access-denied-page.component.css']
 })
 export class AccessDeniedPageComponent {
 
