@@ -1,41 +1,65 @@
+
 <div class="form-container">
+ 
   <div class="form-header">
     <h2>{{ task ? 'Edit Task' : 'Create New Task' }}</h2>
-    <button class="close-btn" (click)="onCancel()">✕</button>
+
+    <div class="header-actions">
+      <button type="button" class="btn-cancel-top" (click)="onCancel()">
+        Cancel
+      </button>
+
+      <button class="close-btn" (click)="onCancel()">✕</button>
+    </div>
   </div>
 
   <form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
+
     <div class="form-group">
       <label for="title">Title</label>
-      <input 
-        type="text" 
-        id="title" 
-        formControlName="title" 
+
+      <input
+        type="text"
+        id="title"
+        formControlName="title"
         placeholder="What needs to be done?"
         [class.invalid]="taskForm.get('title')?.invalid && taskForm.get('title')?.touched"
       >
-      <div class="error-message" *ngIf="taskForm.get('title')?.invalid && taskForm.get('title')?.touched">
+
+      <div
+        class="error-message"
+        *ngIf="taskForm.get('title')?.invalid && taskForm.get('title')?.touched"
+      >
         Title is required (min 3 chars)
       </div>
     </div>
 
+    <!-- Description -->
     <div class="form-group">
       <label for="description">Description</label>
-      <textarea 
-        id="description" 
-        formControlName="description" 
-        rows="3" 
+
+      <textarea
+        id="description"
+        formControlName="description"
+        rows="4"
         placeholder="Add more details..."
         [class.invalid]="taskForm.get('description')?.invalid && taskForm.get('description')?.touched"
       ></textarea>
-      <div class="error-message" *ngIf="taskForm.get('description')?.invalid && taskForm.get('description')?.touched">
+
+      <div
+        class="error-message"
+        *ngIf="taskForm.get('description')?.invalid && taskForm.get('description')?.touched"
+      >
         Description is required
       </div>
     </div>
 
+    <!-- Row -->
     <div class="form-row">
+
       <div class="form-group">
         <label for="priority">Priority</label>
+
         <select id="priority" formControlName="priority">
           <option value="Low">Low</option>
           <option value="Medium">Medium</option>
@@ -45,30 +69,50 @@
 
       <div class="form-group">
         <label for="status">Status</label>
+
         <select id="status" formControlName="status">
           <option value="Todo">Todo</option>
           <option value="In Progress">In Progress</option>
           <option value="Completed">Completed</option>
         </select>
       </div>
+
     </div>
 
     <div class="form-group">
       <label for="dueDate">Due Date</label>
-      <input 
-        type="date" 
-        id="dueDate" 
+
+      <input
+        type="date"
+        id="dueDate"
         formControlName="dueDate"
         [class.invalid]="taskForm.get('dueDate')?.invalid && taskForm.get('dueDate')?.touched"
       >
-      <div class="error-message" *ngIf="taskForm.get('dueDate')?.invalid && taskForm.get('dueDate')?.touched">
+
+      <div
+        class="error-message"
+        *ngIf="taskForm.get('dueDate')?.invalid && taskForm.get('dueDate')?.touched"
+      >
         Due date is required
       </div>
     </div>
 
     <div class="form-actions">
-      <button type="button" class="btn-secondary" (click)="onCancel()">Cancel</button>
-      <button type="submit" class="btn-primary">{{ task ? 'Save Changes' : 'Create Task' }}</button>
+
+      <button
+        type="button"
+        class="btn-secondary"
+        (click)="onCancel()"
+      >
+        Cancel
+      </button>
+
+      <button type="submit" class="btn-primary">
+        {{ task ? 'Save Changes' : 'Create Task' }}
+      </button>
+
     </div>
+
   </form>
 </div>
+
