@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { AuthLayoutComponent } from './layout/auth-layout/auth-layout.component';
 import { MainLayoutComponent } from './layout/main-layout/main-layout.component';
 import { authGuard } from './core/guards/auth.guard';
+import { AccessDeniedPageComponent } from './features/access-denied-page/access-denied-page.component';
 
 export const routes: Routes = [
   {
@@ -41,8 +42,16 @@ export const routes: Routes = [
           import('./features/home/taskview/taskview.component').then(
             (m) => m.TaskviewComponent,
           ),
-      }
-    ]
+      },
+    {
+        path: 'adminpanel',
+
+        loadComponent: () =>
+          import('./features/home/admin-panel/admin-panel.component').then(
+            (m) => m.AdminPanelComponent,
+          ),
+      },]
       
    },
+   { path:'**',component:AccessDeniedPageComponent}
 ];
