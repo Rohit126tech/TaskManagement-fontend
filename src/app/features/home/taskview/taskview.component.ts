@@ -124,9 +124,7 @@ handleTaskSubmit(taskData: any) {
           this.closeModal();
         },
 
-        error: () => {
-          this.toastService.error('Failed to create task');
-        }
+      
 
       });
   }
