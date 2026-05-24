@@ -366,6 +366,28 @@ select:focus {
   color: #64748b;
 }
 
+.status-dropdown {
+  position: relative;
+}
+
+.status-dropdown::after {
+  content: "⌄";
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-52%);
+  font-size: 0.9rem;
+  pointer-events: none;
+  color: currentColor;
+  opacity: 0.8;
+}
+
+.status-dropdown select {
+  appearance: none;
+  padding-right: 34px;
+}
+
+
 @media (max-width: 768px) {
   .actions-bar {
     flex-direction: column;
